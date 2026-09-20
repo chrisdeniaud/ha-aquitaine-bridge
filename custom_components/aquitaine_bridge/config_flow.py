@@ -2,10 +2,11 @@
 
 from __future__ import annotations
 
+from zoneinfo import available_timezones
+
 import voluptuous as vol
 from homeassistant import config_entries
 from homeassistant.core import callback
-from homeassistant.helpers import selector
 
 from .const import (
     CONF_FEED_URL,
@@ -19,6 +20,9 @@ from .const import (
     DEFAULT_TIMEZONE,
     DOMAIN,
 )
+
+
+_TIMEZONES = sorted(available_timezones())
 
 
 def _keywords_to_string(keywords: list[str]) -> str:
@@ -59,7 +63,7 @@ class AquitaineBridgeConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 ),
                 vol.Required(
                     CONF_TIMEZONE, default=self.hass.config.time_zone or DEFAULT_TIMEZONE
-                ): selector.TimeZoneSelector(),
+                ): vol.In(_TIMEZONES),
             }
         )
         return self.async_show_form(step_id="user", data_schema=data_schema, errors=errors)
@@ -67,12 +71,13 @@ class AquitaineBridgeConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     @staticmethod
     @callback
     def async_get_options_flow(config_entry):
-        return AquitaineBridgeOptionsFlowHandler(config_entry)
+        return AquitaineBridgeOptionsFlowHandler()
 
 
 class AquitaineBridgeOptionsFlowHandler(config_entries.OptionsFlow):
-    def __init__(self, config_entry) -> None:
-        self.config_entry = config_entry
+    # `config_entry` est fourni par la classe de base (lecture seule, non
+    # disponible dans __init__) depuis que HA a retiré l'affectation manuelle
+    # historique de cet attribut dans les options flows.
 
     async def async_step_init(self, user_input=None):
         if user_input is not None:
@@ -94,7 +99,7 @@ class AquitaineBridgeOptionsFlowHandler(config_entries.OptionsFlow):
                     vol.Required(CONF_SCAN_INTERVAL, default=current_interval): vol.All(
                         vol.Coerce(int), vol.Range(min=5, max=1440)
                     ),
-                    vol.Required(CONF_TIMEZONE, default=current_timezone): selector.TimeZoneSelector(),
+                    vol.Required(CONF_TIMEZONE, default=current_timezone): vol.In(_TIMEZONES),
                 }
             ),
         )

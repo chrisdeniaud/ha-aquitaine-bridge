@@ -35,6 +35,11 @@ class AlwaysShowSwitch(AquitaineBridgeEntity, SwitchEntity, RestoreEntity):
         last_state = await self.async_get_last_state()
         self._attr_is_on = last_state is not None and last_state.state == "on"
         self.coordinator.always_show = self._attr_is_on
+        # Le capteur de statut a pu s'initialiser avant la restauration de cet
+        # état (ordre de setup des plateformes non garanti) : le notifier pour
+        # qu'il reflète immédiatement l'état restauré, sans attendre le
+        # prochain cycle de rafraîchissement du coordinator.
+        self.coordinator.async_update_listeners()
 
     async def async_turn_on(self, **kwargs: Any) -> None:
         self._attr_is_on = True
