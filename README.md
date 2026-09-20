@@ -1,12 +1,6 @@
 # ha-aquitaine-bridge
 
-Intégration Home Assistant qui suit les fermetures actuelles et à venir du pont d'Aquitaine (A630, rocade de Bordeaux).
-
-## Pourquoi pas l'API DiaLog ?
-
-Le projet gouvernemental [DiaLog](https://github.com/MTES-MCT/dialog) expose un flux DATEX II national des arrêtés de circulation, avec un filtre géographique par code INSEE de commune (`GET /api/regulations/json?inseeCode=...`). Vérification faite (20/09/2026) : la DIR Atlantique, gestionnaire du pont d'Aquitaine, n'y publie aucun arrêté pour les communes de Bordeaux (33063), Lormont (33249) ou Bruges (33075) - la base DiaLog est vide sur ce périmètre.
-
-La véritable source des fermetures est le site de la DIR Atlantique, qui publie un flux RSS (`spip.php?page=backend-actu`) mis à jour à chaque communiqué. C'est cette source qu'utilise l'intégration.
+Intégration Home Assistant qui suit les fermetures actuelles et à venir du pont d'Aquitaine (A630, rocade de Bordeaux), à partir du flux RSS d'actualités de la DIR Atlantique (`spip.php?page=backend-actu`).
 
 ## Fonctionnement
 
