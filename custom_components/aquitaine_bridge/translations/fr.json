@@ -1,0 +1,53 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Pont d'Aquitaine",
+        "description": "Suivi des fermetures du pont d'Aquitaine (A630) via le flux d'actualités de la DIR Atlantique.",
+        "data": {
+          "name": "Nom",
+          "feed_url": "URL du flux RSS",
+          "keywords": "Mots-clés de filtrage (séparés par des virgules)",
+          "scan_interval": "Intervalle de rafraîchissement (minutes)",
+          "timezone": "Fuseau horaire d'affichage"
+        }
+      }
+    },
+    "abort": {
+      "already_configured": "Ce flux est déjà configuré."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "data": {
+          "scan_interval": "Intervalle de rafraîchissement (minutes)",
+          "timezone": "Fuseau horaire d'affichage"
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "next_closure": {
+        "name": "Prochaine fermeture"
+      },
+      "latest_news": {
+        "name": "Dernière actualité"
+      },
+      "status": {
+        "name": "Statut"
+      }
+    },
+    "binary_sensor": {
+      "closed_now": {
+        "name": "Fermeture en cours"
+      }
+    },
+    "switch": {
+      "always_show": {
+        "name": "Toujours afficher"
+      }
+    }
+  }
+}

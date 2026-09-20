@@ -1,0 +1,53 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Pont d'Aquitaine",
+        "description": "Track Pont d'Aquitaine (A630) closures via the DIR Atlantique news feed.",
+        "data": {
+          "name": "Name",
+          "feed_url": "RSS feed URL",
+          "keywords": "Filter keywords (comma-separated)",
+          "scan_interval": "Refresh interval (minutes)",
+          "timezone": "Display timezone"
+        }
+      }
+    },
+    "abort": {
+      "already_configured": "This feed is already configured."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "data": {
+          "scan_interval": "Refresh interval (minutes)",
+          "timezone": "Display timezone"
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "next_closure": {
+        "name": "Next closure"
+      },
+      "latest_news": {
+        "name": "Latest news"
+      },
+      "status": {
+        "name": "Status"
+      }
+    },
+    "binary_sensor": {
+      "closed_now": {
+        "name": "Currently closed"
+      }
+    },
+    "switch": {
+      "always_show": {
+        "name": "Always show"
+      }
+    }
+  }
+}
